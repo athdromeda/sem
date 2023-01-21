@@ -1,13 +1,8 @@
 import { useRef, useState, useMemo } from "react";
-import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 export const Moon = (props) => {
   const mesh = useRef();
-
-  useFrame(() => {
-    // mesh.current.rotation.y += 0.01;
-  });
 
   const texture = useMemo(
     () => new THREE.TextureLoader().load(moonData.texture),

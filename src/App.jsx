@@ -1,17 +1,10 @@
 import { useRef, useState, useMemo } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import * as THREE from "three";
+import { Canvas } from "@react-three/fiber";
 import { Earth } from "./Earth";
 import { Moon } from "./Moon";
 import "./App.css";
-import {
-  OrthographicCamera,
-  OrbitControls,
-  Stats,
-  Sphere,
-  MeshWobbleMaterial,
-} from "@react-three/drei";
-import { julian, base, moonposition, solar } from "astronomia";
+import { OrthographicCamera, OrbitControls } from "@react-three/drei";
+import { julian, moonposition, solar } from "astronomia";
 import { Sun } from "./Sun";
 import { useEffect } from "react";
 
@@ -24,28 +17,15 @@ const D2R = Math.PI / 180;
 const EqPlane = (props) => {
   const mesh = useRef();
 
-  const texture = useMemo(
-    () => new THREE.TextureLoader().load('/grid/polar.png'),
-    []
-  );
-
   return (
     <mesh {...props} ref={mesh} rotation={[0, 0, 0]}>
-      {/* <circleGeometry args={[200, 32, 32]} />
-      <meshBasicMaterial color="#9e66ef" side={THREE.DoubleSide}>
-
-      <primitive attach="map" object={texture} />
-      </meshBasicMaterial> */}
-      
-      <polarGridHelper args={[1000, 64, 64, 64, '#3575ff', '#3158ac']}/>
+      <polarGridHelper args={[1000, 64, 64, 64, "#3575ff", "#3158ac"]} />
     </mesh>
   );
 };
 
-
-
 function App() {
-  const [current, setCurrent] = useState(new Date()); 
+  const [current, setCurrent] = useState(new Date());
 
   useEffect(() => {
     setInterval(() => setCurrent(new Date()), 1000);
@@ -71,6 +51,11 @@ function App() {
             moonPos._dec,
             200 * Math.sin((deltaRA + 90) * D2R),
           ]}
+          rotation={[
+            0,
+            0 + Math.PI / 2, //normalize moon map direction
+            0,
+          ]}
         />
         <Sun position={[0, 0, 300]} />
         <EqPlane position={[0, 0, 0]} />
@@ -84,9 +69,13 @@ function App() {
           <input type="time" name="" id="" />
         </div>
         <div>
-          <a>Sun (RA, Dec) : ({solarPos._ra},{solarPos._dec})</a>
+          <a>
+            Sun (RA, Dec) : ({solarPos._ra},{solarPos._dec})
+          </a>
           <br />
-          <a>Moon (RA, Dec) : ({moonPos._ra},{moonPos._dec})</a>
+          <a>
+            Moon (RA, Dec) : ({moonPos._ra},{moonPos._dec})
+          </a>
         </div>
       </section>
     </>
