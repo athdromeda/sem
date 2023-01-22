@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import moment from "moment";
 import { julian, moonposition, solar } from "astronomia";
+import Draggable from "react-draggable";
 import "./Panel.css";
 
 export default function Panel({ date, time, setDate, setTime }) {
@@ -29,82 +30,95 @@ export default function Panel({ date, time, setDate, setTime }) {
   const moonPos = moonposition.position(jde);
   const solarPos = solar.trueEquatorial(jde);
 
+  function decToDMS(decimal) {
+    var degrees = Math.floor(decimal);
+    var minutes = Math.floor((decimal - degrees) * 60);
+    var seconds = (((decimal - degrees) * 60) - minutes) * 60;
+    return degrees + "° " + minutes + "' " + seconds.toFixed(2) + "''";
+}
+
   return (
-    <section>
-      <p>{"JDE = " + jde}</p>
-      <div className="datetime-picker">
-        <div className="date-picker">
-          <input
-            type="number"
-            id="day"
-            min={1}
-            max={31}
-            value={day}
-            pattern="[0-9]*"
-            onChange={(e) => setDay(parseInt(e.target.value))}
+    <Draggable handle="#handle">
+      <div className="section">
+        <div className="datetime-picker">
+          <div className="date-picker">
+            <a>📅</a>
+            <input
+              type="number"
+              id="day"
+              min={1}
+              max={31}
+              value={day}
+              pattern="[0-9]*"
+              onChange={(e) => setDay(parseInt(e.target.value))}
             />
-          <p>{"/"}</p>
-          <input
-            type="number"
-            id="month"
-            min={1}
-            max={12}
-            value={month}
-            pattern="[0-9]*"
-            onChange={(e) => setMonth(parseInt(e.target.value))}
+            <p>{"/"}</p>
+            <input
+              type="number"
+              id="month"
+              min={1}
+              max={12}
+              value={month}
+              pattern="[0-9]*"
+              onChange={(e) => setMonth(parseInt(e.target.value))}
             />
-          <p>{"/"}</p>
-          <input
-            type="number"
-            id="year"
-            min={1}
-            max={2999}
-            value={year}
-            pattern="[0-9]*"
-            onChange={(e) => setYear(parseInt(e.target.value))}
-          />
+            <p>{"/"}</p>
+            <input
+              type="number"
+              id="year"
+              min={1}
+              max={2999}
+              value={year}
+              pattern="[0-9]*"
+              onChange={(e) => setYear(parseInt(e.target.value))}
+            />
+          </div>
+          <div className="time-picker">
+            <a>🕗</a>
+            <input
+              type="number"
+              min={0}
+              max={23}
+              value={hour}
+              pattern="[0-9]*"
+              onChange={(e) => setHour(parseInt(e.target.value))}
+            />
+            <p>{":"}</p>
+            <input
+              type="number"
+              min={0}
+              max={59}
+              value={minute}
+              pattern="[0-9]*"
+              onChange={(e) => setMinute(parseInt(e.target.value))}
+            />
+          </div>
+          <button
+            onClick={() => {
+              setDay(initDay);
+              setMonth(initMonth);
+              setYear(initYear);
+              setHour(initHour);
+              setMinute(initMinute);
+              console.log("clicked!");
+            }}
+          >
+            🔄
+          </button>
+          <div id="handle">handle</div>
         </div>
-        <div className="time-picker">
-          <input
-            type="number"
-            min={0}
-            max={23}
-            value={hour}
-            pattern="[0-9]*"
-            onChange={(e) => setHour(parseInt(e.target.value))}
-          />
-          <p>{":"}</p>
-          <input
-            type="number"
-            min={0}
-            max={59}
-            value={minute}
-            pattern="[0-9]*"
-            onChange={(e) => setMinute(parseInt(e.target.value))}
-          />
+        <div className="panel">
+          <a>🗓 JDE : {jde.toFixed(4)}</a>
+          <br />
+          <a>
+            🌞 (α, δ) : ({decToDMS(solarPos._ra * R2D)}, {decToDMS(solarPos._dec * R2D)})
+          </a>
+          <br />
+          <a>
+          🌛 (α, δ) : ({decToDMS(moonPos._ra * R2D)}, {decToDMS(moonPos._dec * R2D)})
+          </a>
         </div>
-        <button
-          onClick={() => {
-            setDay(initDay);
-            setMonth(initMonth);
-            setYear(initYear);
-            setHour(initHour);
-            setMinute(initMinute);
-            console.log("clicked!");
-          }}
-        >
-          reset
-        </button>
       </div>
-      <div className="panel">
-        <a>
-          Sun (RA, Dec) : ({solarPos._ra * R2D},{solarPos._dec * R2D})
-        </a>
-        <br />
-        <a>
-          Moon (RA, Dec) : ({moonPos._ra * R2D},{moonPos._dec * R2D})
-        </a>
-      </div>
-    </section>
+    </Draggable>
   );
 }

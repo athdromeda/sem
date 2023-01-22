@@ -11,6 +11,7 @@ specifiers:
   moment: ^2.29.4
   react: ^18.2.0
   react-dom: ^18.2.0
+  react-draggable: ^4.4.5
   three: ^0.148.0
   vite: ^4.0.0
 
@@ -22,6 +23,7 @@ dependencies:
   moment: 2.29.4
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-draggable: 4.4.5_biqbaboplfbrettd7655fr4n2y
   three: 0.148.0
 
 devDependencies:
@@ -785,6 +787,11 @@ packages:
       regexp-to-ast: 0.5.0
     dev: false
 
+  /clsx/1.2.1:
+    resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
+    engines: {node: '>=6'}
+    dev: false
+
   /color-convert/1.9.3:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}
     dependencies:
@@ -1084,6 +1091,18 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-draggable/4.4.5_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-OMHzJdyJbYTZo4uQE393fHcqqPYsEtkjfMgvCHr6rejT+Ezn4OZbNyGH50vv+SunC1RMvwOTSWkEODQLzw1M9g==}
+    peerDependencies:
+      react: '>= 16.3.0'
+      react-dom: '>= 16.3.0'
+    dependencies:
+      clsx: 1.2.1
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /react-is/16.13.1:
