@@ -1,22 +1,13 @@
-import { useRef, useState, useMemo } from "react";
+import { useRef, useState, useMemo, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
+import { OrthographicCamera, OrbitControls, Stats } from "@react-three/drei";
+import moment from "moment";
+import "./App.css";
+
 import { Earth } from "./Earth";
 import { Moon } from "./Moon";
-import "./App.css";
-import { OrthographicCamera, OrbitControls, Stats } from "@react-three/drei";
 import { Sun } from "./Sun";
-import { useEffect } from "react";
-import moment from "moment";
-
-const EqPlane = (props) => {
-  const mesh = useRef();
-
-  return (
-    <mesh {...props} ref={mesh} rotation={[0, 0, 0]}>
-      <polarGridHelper args={[1000, 64, 64, 64, "#3575ff", "#3158ac"]} />
-    </mesh>
-  );
-};
+import EqPlane from "./grid/EqPlane";
 
 function App() {
   const [date, setDate] = useState(moment());
@@ -42,7 +33,7 @@ function App() {
         <Earth date={finalDate}/>
         <Moon date={finalDate}/>
         <Sun/>
-        <EqPlane position={[0, 0, 0]} />
+        <EqPlane/>
         <OrbitControls />
       </Canvas>
 
