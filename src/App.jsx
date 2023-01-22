@@ -46,14 +46,7 @@ function App() {
         <ambientLight intensity={0.2} />
         {/* <OrthographicCamera /> */}
 
-        <Earth
-          position={[0, 0, 0]}
-          rotation={[
-            0,
-            0 + Math.PI / 2 + date._d.getUTCHours() * 15 * D2R, //rotate earth to greenwich
-            0,
-          ]}
-        />
+        <Earth date={finalDate}/>
         <Moon
           position={[
             // 200 * Math.cos((deltaRA + 90) * D2R),
