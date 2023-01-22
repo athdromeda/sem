@@ -11,7 +11,7 @@ export const Sun = (props) => {
 
   return (
     <>
-      <pointLight position={[0, 0, 1000]} intensity={2} />
+      <directionalLight position={[0,0,1000]} intensity={2}/>
       <mesh {...props} ref={mesh} scale={1} position={[0, 0, 300]}>
         <sphereGeometry args={[sunData.radius, 40, 24]} />
         <meshBasicMaterial
