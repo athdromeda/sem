@@ -4,7 +4,6 @@ import { Earth } from "./Earth";
 import { Moon } from "./Moon";
 import "./App.css";
 import { OrthographicCamera, OrbitControls, Stats } from "@react-three/drei";
-import { julian, moonposition, solar } from "astronomia";
 import { Sun } from "./Sun";
 import { useEffect } from "react";
 import moment from "moment";
@@ -30,12 +29,6 @@ function App() {
     );
   }, [date, time]);
 
-  const jde = julian.DateToJD(finalDate);
-  const moonPos = moonposition.position(jde);
-  const solarPos = solar.trueEquatorial(jde);
-  const deltaRA = Math.abs(solarPos._ra - moonPos._ra);
-  const D2R = Math.PI / 180;
-
   // useEffect(() => {
   //   setInterval(() => setdate(localdate), 10000);
   // }, []);
@@ -47,26 +40,14 @@ function App() {
         {/* <OrthographicCamera /> */}
 
         <Earth date={finalDate}/>
-        <Moon
-          position={[
-            // 200 * Math.cos((deltaRA + 90) * D2R),
-            200 * Math.cos((deltaRA + 90) * D2R) * -1,
-            moonPos._dec,
-            200 * Math.sin((deltaRA + 90) * D2R),
-          ]}
-          rotation={[
-            0,
-            0 + Math.PI / 2, //normalize moon map direction
-            0,
-          ]}
-        />
+        <Moon date={finalDate}/>
         <Sun position={[0, 0, 300]} />
         <EqPlane position={[0, 0, 0]} />
         <OrbitControls />
       </Canvas>
 
       <section>
-        <p>{"JDE = " + jde}</p>
+        {/* <p>{"JDE = " + jde}</p> */}
         <div className="timepicker">
           <input
             type="date"
@@ -89,11 +70,11 @@ function App() {
         </div>
         <div className="panel">
           <a>
-            Sun (RA, Dec) : ({solarPos._ra},{solarPos._dec})
+            {/* Sun (RA, Dec) : ({solarPos._ra},{solarPos._dec}) */}
           </a>
           <br />
           <a>
-            Moon (RA, Dec) : ({moonPos._ra},{moonPos._dec})
+            {/* Moon (RA, Dec) : ({moonPos._ra},{moonPos._dec}) */}
           </a>
           <a>{JSON.stringify(time)}</a>
         </div>
