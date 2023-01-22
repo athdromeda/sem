@@ -1,4 +1,4 @@
-import { useRef, useState, useMemo, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrthographicCamera, OrbitControls, Stats } from "@react-three/drei";
 import moment from "moment";
@@ -8,6 +8,7 @@ import { Earth } from "./Earth";
 import { Moon } from "./Moon";
 import { Sun } from "./Sun";
 import EqPlane from "./grid/EqPlane";
+import Panel from "./Panel";
 
 function App() {
   const [date, setDate] = useState(moment());
@@ -30,46 +31,14 @@ function App() {
         <ambientLight intensity={0.2} />
         {/* <OrthographicCamera /> */}
 
-        <Earth date={finalDate}/>
-        <Moon date={finalDate}/>
-        <Sun/>
-        <EqPlane/>
+        <Earth date={finalDate} />
+        <Moon date={finalDate} />
+        <Sun />
+        <EqPlane />
         <OrbitControls />
       </Canvas>
 
-      <section>
-        {/* <p>{"JDE = " + jde}</p> */}
-        <div className="timepicker">
-          <input
-            type="date"
-            value={date.format("YYYY-MM-DD")}
-            onChange={(e) => setDate(moment(e.target.value, "YYYY-MM-DD"))}
-          />
-          <input
-            type="time"
-            value={time.format("HH:mm")}
-            onChange={(e) => setTime(moment(e.target.value, "HH:mm"))}
-          />
-          <button
-            onClick={() => {
-              setTime(moment());
-              setDate(moment());
-            }}
-          >
-            reset
-          </button>
-        </div>
-        <div className="panel">
-          <a>
-            {/* Sun (RA, Dec) : ({solarPos._ra},{solarPos._dec}) */}
-          </a>
-          <br />
-          <a>
-            {/* Moon (RA, Dec) : ({moonPos._ra},{moonPos._dec}) */}
-          </a>
-          <a>{JSON.stringify(time)}</a>
-        </div>
-      </section>
+      <Panel date={date} time={time} setDate={setDate} setTime={setTime} />
     </>
   );
 }
