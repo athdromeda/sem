@@ -5,11 +5,12 @@ import { julian, moonposition, solar } from "astronomia";
 export const Moon = (props) => {
   const mesh = useRef();
 
+  const D2R = Math.PI / 180;
+  const R2D = 180 / Math.PI;
   const jde = julian.DateToJD(props.date);
   const moonPos = moonposition.position(jde);
   const solarPos = solar.trueEquatorial(jde);
-  const deltaRA = Math.abs(solarPos._ra - moonPos._ra);
-  const D2R = Math.PI / 180;
+  const deltaRA = Math.abs(solarPos._ra - moonPos._ra)*R2D;
 
   const texture = useMemo(
     () => new THREE.TextureLoader().load(moonData.texture),
