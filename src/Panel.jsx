@@ -36,25 +36,31 @@ export default function Panel({ date, time, setDate, setTime }) {
         <div className="date-picker">
           <input
             type="number"
+            id="day"
             min={1}
             max={31}
             value={day}
+            pattern="[0-9]*"
             onChange={(e) => setDay(parseInt(e.target.value))}
-          />
+            />
           <p>{"/"}</p>
           <input
             type="number"
+            id="month"
             min={1}
             max={12}
             value={month}
+            pattern="[0-9]*"
             onChange={(e) => setMonth(parseInt(e.target.value))}
-          />
+            />
           <p>{"/"}</p>
           <input
             type="number"
+            id="year"
             min={1}
             max={2999}
             value={year}
+            pattern="[0-9]*"
             onChange={(e) => setYear(parseInt(e.target.value))}
           />
         </div>
@@ -64,6 +70,7 @@ export default function Panel({ date, time, setDate, setTime }) {
             min={0}
             max={23}
             value={hour}
+            pattern="[0-9]*"
             onChange={(e) => setHour(parseInt(e.target.value))}
           />
           <p>{":"}</p>
@@ -72,6 +79,7 @@ export default function Panel({ date, time, setDate, setTime }) {
             min={0}
             max={59}
             value={minute}
+            pattern="[0-9]*"
             onChange={(e) => setMinute(parseInt(e.target.value))}
           />
         </div>

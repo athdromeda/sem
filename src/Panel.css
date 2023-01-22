@@ -11,6 +11,7 @@ section {
 
 .panel {
     background: #1b2aff3a;
+    margin-top: 10px;
     margin-bottom: 20px;
     padding: 5px 10px;
 }
@@ -31,23 +32,39 @@ p {
     display: flex;
 }
 
-.date-picker>* {
-    width: 60px;
+input#day,
+input#month {
+    width: 1rem;
+    text-align: end;
+}
+
+input#year {
+    width: 2.5rem;
 }
 
 .time-picker>* {
-    width: 40px;
+    width: 1rem;
 }
 
 input {
     background: transparent;
     color: white;
     border: 0;
-    border-bottom: 1px solid white;
 }
 
 input:focus {
     outline: none;
+    border-bottom: 1px solid white;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
 }
 
 .date-picker>p,
@@ -57,6 +74,6 @@ input:focus {
 
 button {
     border: 0;
-    padding: 5px 10px;
+    padding: 3px 10px;
     cursor: pointer;
 }
