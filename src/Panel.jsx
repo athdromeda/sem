@@ -3,6 +3,7 @@ import moment from "moment";
 import { julian, moonposition, solar } from "astronomia";
 import Draggable from "react-draggable";
 import "./Panel.css";
+import { useRef } from "react";
 
 export default function Panel({ date, time, setDate, setTime }) {
   const [initDay, initMonth, initYear, initHour, initMinute] = [
@@ -33,12 +34,14 @@ export default function Panel({ date, time, setDate, setTime }) {
   function decToDMS(decimal) {
     var degrees = Math.floor(decimal);
     var minutes = Math.floor((decimal - degrees) * 60);
-    var seconds = (((decimal - degrees) * 60) - minutes) * 60;
+    var seconds = ((decimal - degrees) * 60 - minutes) * 60;
     return degrees + "° " + minutes + "' " + seconds.toFixed(2) + "''";
-}
+  }
+
+  const nodeRef = useRef(null)
 
   return (
-    <Draggable handle="#handle">
+    <Draggable nodeRef={nodeRef}>
       <div className="section">
         <div className="datetime-picker">
           <div className="date-picker">
@@ -105,17 +108,19 @@ export default function Panel({ date, time, setDate, setTime }) {
           >
             🔄
           </button>
-          <div id="handle">handle</div>
+          <div id="handle" ref={nodeRef}>handle</div>
         </div>
         <div className="panel">
           <a>🗓 JDE : {jde.toFixed(4)}</a>
           <br />
           <a>
-            🌞 (α, δ) : ({decToDMS(solarPos._ra * R2D)}, {decToDMS(solarPos._dec * R2D)})
+            🌞 (α, δ) : ({decToDMS(solarPos._ra * R2D)},{" "}
+            {decToDMS(solarPos._dec * R2D)})
           </a>
           <br />
           <a>
-          🌛 (α, δ) : ({decToDMS(moonPos._ra * R2D)}, {decToDMS(moonPos._dec * R2D)})
+            🌛 (α, δ) : ({decToDMS(moonPos._ra * R2D)},{" "}
+            {decToDMS(moonPos._dec * R2D)})
           </a>
         </div>
       </div>
