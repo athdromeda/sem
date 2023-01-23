@@ -29,7 +29,7 @@ export const Moon = (props) => {
       ]}
       rotation={[
         0,
-        0 + Math.PI / 2, //normalize moon map direction
+        0 + Math.PI / 2 + (deltaRA) * D2R, //normalize moon map direction
         0,
       ]}
     >
