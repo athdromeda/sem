@@ -2,9 +2,26 @@ import { useRef, useState, useMemo } from "react";
 import * as THREE from "three";
 import { julian, solar } from "astronomia";
 import EcPlane from "./grid/EcPlane";
+import { useCallback } from "react";
+import { useEffect } from "react";
 
 export const Sun = (props) => {
+  const [showEcliptic, setShowEcliptic] = useState(false);
   const mesh = useRef();
+
+  const handleKeyPress = useCallback((e) => {
+    if (e.key === "c") {
+      setShowEcliptic(!showEcliptic);
+    }
+  });
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [handleKeyPress]);
 
   const D2R = Math.PI / 180;
   const R2D = 180 / Math.PI;
@@ -18,6 +35,18 @@ export const Sun = (props) => {
 
   return (
     <>
+      {showEcliptic && (
+        <EcPlane
+          position={[
+            0,
+
+            300 * Math.sin(solarDec * D2R),
+            300 * Math.cos(solarDec * D2R),
+          ]}
+          rotation={[-solarDec * D2R, 0, 0]}
+        />
+      )}
+
       <directionalLight
         position={[
           0,
@@ -25,19 +54,6 @@ export const Sun = (props) => {
           1000 * Math.cos((solarDec - 0) * D2R),
         ]}
         intensity={2}
-      />
-
-      <EcPlane
-        position={[
-          0,
-
-          300 * Math.sin(solarDec * D2R),
-          300 * Math.cos(solarDec * D2R),
-        ]}
-
-        rotation={[
-          -solarDec*D2R,0,0
-        ]}
       />
 
       <mesh

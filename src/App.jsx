@@ -34,7 +34,6 @@ function App() {
         <Earth date={finalDate} />
         <Moon date={finalDate} />
         <Sun date={finalDate} />
-        <EqPlane />
         <OrbitControls />
       </Canvas>
 
